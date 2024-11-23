@@ -1,0 +1,118 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const ReportLost = () => {
+    const [formData, setFormData] = useState({ title: '', description: '', location: '', contact: '' });
+    const [images, setImages] = useState([]);
+
+    const handleFileChange = (e) => {
+        setImages(e.target.files);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formDataWithImages = new FormData();
+        formDataWithImages.append('title', formData.title);
+        formDataWithImages.append('description', formData.description);
+        formDataWithImages.append('location', formData.location);
+        formDataWithImages.append('contact', formData.contact);
+
+        Array.from(images).forEach((image) => formDataWithImages.append('images', image));
+
+        try {
+            const token = localStorage.getItem('token');
+            const { data } = await axios.post('http://localhost:5176/items/lost', formDataWithImages, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            alert('Lost item reported successfully!');
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+            alert('Failed to report lost item.');
+        }
+    };
+
+    return (
+        <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Report Lost Item</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                    <label htmlFor="title" className="block text-lg font-medium mb-2">Title</label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        placeholder="Enter item title"
+                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="description" className="block text-lg font-medium mb-2">Description</label>
+                    <textarea
+                        name="description"
+                        id="description"
+                        placeholder="Enter a brief description"
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="location" className="block text-lg font-medium mb-2">Location</label>
+                    <input
+                        type="text"
+                        name="location"
+                        id="location"
+                        placeholder="Enter the location"
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="contact" className="block text-lg font-medium mb-2">Contact Info</label>
+                    <input
+                        type="text"
+                        name="contact"
+                        id="contact"
+                        placeholder="Enter your contact info"
+                        onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="images" className="block text-lg font-medium mb-2">Upload Images</label>
+                    <input
+                        type="file"
+                        name="images"
+                        id="images"
+                        accept="image/*"
+                        multiple
+                        onChange={handleFileChange}
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full p-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700"
+                >
+                    Report Lost Item
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default ReportLost;
