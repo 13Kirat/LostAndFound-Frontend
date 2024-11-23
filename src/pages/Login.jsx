@@ -1,82 +1,68 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-    const [formData, setFormData] = useState({ email: '', password: '' });
-    const navigate = useNavigate();
+    const { login } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        setError(null); // Clear any previous error
         try {
-            const { data } = await axios.post('http://localhost:5176/auth/login', formData);
-            toast.success('Login successful!');
-            console.log(data);
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            navigate("/");
-        } catch (err) {
-            toast.error(`Error: ${err.response?.data?.message || "Something went wrong!"}`);
+            const response = await axios.post("http://localhost:5176/auth/login", { email, password });
+            login(response.data.user, response.data.token); // Update global state
+            window.location.href = "/";
+        } catch (error) {
+            console.error(error);
+            setError("Login failed. Please check your credentials.");
         }
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-            <form
-                onSubmit={handleSubmit}
-                className="bg-white p-8 rounded shadow-md w-full max-w-sm space-y-6"
-            >
-                <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
-                <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        onChange={handleChange}
-                        required
-                        className="w-full mt-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-600">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        onChange={handleChange}
-                        required
-                        className="w-full mt-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded font-medium hover:bg-blue-700 transition duration-200"
-                >
-                    Login
-                </button>
-
-                {/* Sign Up Link */}
-                <div className="text-center mt-4">
-                    <p className="text-sm text-gray-600">
-                        Don't have an account?{' '}
-                        <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-medium">
-                            Sign up
-                        </Link>
-                    </p>
-                </div>
-            </form>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
+                <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+                {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+                <form onSubmit={handleLogin}>
+                    <div className="mb-4">
+                        <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+                    >
+                        Login
+                    </button>
+                </form>
+                <p className="text-center text-gray-600 mt-4">
+                    Don't have an account?{" "}
+                    <a href="/signup" className="text-blue-500 hover:underline">Sign Up</a>
+                </p>
+            </div>
         </div>
     );
 };
