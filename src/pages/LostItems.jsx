@@ -12,6 +12,7 @@ const LostItems = () => {
                 const response = await axios.get("http://localhost:5176/items/lost", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
+                console.log(response.data)
                 setLostItems(response.data);
             } catch (error) {
                 console.error(error);
@@ -31,6 +32,30 @@ const LostItems = () => {
         } catch (error) {
             console.error(error);
             alert("Failed to delete the item.");
+        }
+    };
+
+    const handleClaim = async (id) => {
+        try {
+            const response = await axios.put(
+                `http://localhost:5176/items/lost/claim/${id}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            // Update the local state with the claimed item
+            setLostItems(
+                lostItems.map((item) =>
+                    item.id === id ? { ...item, isClaimed: true } : item
+                )
+            );
+            alert("Item claimed successfully!");
+        } catch (error) {
+            console.error(error);
+            alert("Failed to claim the item.");
         }
     };
 
@@ -57,7 +82,21 @@ const LostItems = () => {
                         )}
                         <p className="mb-2">{item.description}</p>
                         <p className="text-sm text-gray-600">Location: {item.location}</p>
-                        {user && user._id === item.userId && ( // Check if the user is the owner
+                        {/* Claim functionality */}
+                        {user && user.id == item.postedBy && (
+                            <div className="mt-2">
+                                {!item.isClaimed ? <button
+                                    onClick={() => handleClaim(item._id)}
+                                    className="text-blue-500 font-semibold"
+                                >
+                                    Claim this Item
+                                </button> : "Claimed"}
+                            </div>
+                        )}
+                        {item.isClaimed && "Claimed"}
+
+                        {/* Display delete button only if the user is the owner */}
+                        {user && user.id === item.postedBy && (
                             <div className="mt-2">
                                 <button
                                     onClick={() => handleDelete(item._id)}

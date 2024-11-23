@@ -1,33 +1,36 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from "../context/AuthContext";
 
 const ReportLost = () => {
     const [formData, setFormData] = useState({ title: '', description: '', location: '', contact: '' });
     const [images, setImages] = useState([]);
-
+    const { user } = useAuth();
     const handleFileChange = (e) => {
         setImages(e.target.files);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const formDataWithImages = new FormData();
         formDataWithImages.append('title', formData.title);
         formDataWithImages.append('description', formData.description);
         formDataWithImages.append('location', formData.location);
         formDataWithImages.append('contact', formData.contact);
+        formDataWithImages.append('user', user.id);
 
         Array.from(images).forEach((image) => formDataWithImages.append('images', image));
 
         try {
             const token = localStorage.getItem('token');
+            console.log(formDataWithImages)
             const { data } = await axios.post('http://localhost:5176/items/lost', formDataWithImages, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`,
                 },
             });
+            console.log(formDataWithImages)
             alert('Lost item reported successfully!');
             console.log(data);
         } catch (error) {

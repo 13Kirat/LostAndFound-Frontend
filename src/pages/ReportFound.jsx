@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from "../context/AuthContext";
 
 const ReportFound = () => {
     const [formData, setFormData] = useState({ title: '', description: '', location: '', contact: '' });
     const [images, setImages] = useState([]);
-
+    const { user } = useAuth();
     const handleFileChange = (e) => {
         setImages(e.target.files);
     };
@@ -17,6 +18,7 @@ const ReportFound = () => {
         formDataWithImages.append('description', formData.description);
         formDataWithImages.append('location', formData.location);
         formDataWithImages.append('contact', formData.contact);
+        formDataWithImages.append('user', user.id);
 
         Array.from(images).forEach((image) => formDataWithImages.append('images', image));
 
