@@ -17,28 +17,31 @@ const App = () => {
   const { isLoggedIn } = useAuth(); // Get login status from AuthContext
 
   return (
-    <Router>
-      <Navbar />
+    <div className="bg-gray-800">
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+      <Router>
+        <Navbar />
 
-        {/* Secure routes for authenticated users */}
-        {isLoggedIn && (
-          <>
-            <Route path="/lost" element={<LostItems />} />
-            <Route path="/found" element={<FoundItems />} />
-            <Route path="/report-lost" element={<ReportLost />} />
-            <Route path="/report-found" element={<ReportFound />} />
-          </>
-        )}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
 
-      </Routes>
-    </Router>
+          {/* Secure routes for authenticated users */}
+          {isLoggedIn && (
+            <>
+              <Route path="/lost" element={<LostItems />} />
+              <Route path="/found" element={<FoundItems />} />
+              <Route path="/report-lost" element={<ReportLost />} />
+              <Route path="/report-found" element={<ReportFound />} />
+            </>
+          )}
+
+        </Routes>
+      </Router>
+    </div>
   );
 };
 

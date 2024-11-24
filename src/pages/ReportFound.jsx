@@ -6,6 +6,7 @@ const ReportFound = () => {
     const [formData, setFormData] = useState({ title: '', description: '', location: '', contact: '' });
     const [images, setImages] = useState([]);
     const { user } = useAuth();
+
     const handleFileChange = (e) => {
         setImages(e.target.files);
     };
@@ -39,11 +40,11 @@ const ReportFound = () => {
     };
 
     return (
-        <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold mb-4 text-center">Report Found Item</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="max-w-3xl mx-auto p-8 bg-gray-800 rounded-lg shadow-lg">
+            <h2 className="text-3xl font-semibold text-white mb-6 text-center">Report Found Item</h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="mb-4">
-                    <label htmlFor="title" className="block text-lg font-medium mb-2">Title</label>
+                    <label htmlFor="title" className="block text-lg font-medium text-gray-200 mb-2">Title</label>
                     <input
                         type="text"
                         name="title"
@@ -51,24 +52,24 @@ const ReportFound = () => {
                         placeholder="Enter item title"
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                        className="w-full p-4 border border-gray-700 bg-gray-900 rounded-md text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="description" className="block text-lg font-medium mb-2">Description</label>
+                    <label htmlFor="description" className="block text-lg font-medium text-gray-200 mb-2">Description</label>
                     <textarea
                         name="description"
                         id="description"
                         placeholder="Enter a brief description"
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                        className="w-full p-4 border border-gray-700 bg-gray-900 rounded-md text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="location" className="block text-lg font-medium mb-2">Location</label>
+                    <label htmlFor="location" className="block text-lg font-medium text-gray-200 mb-2">Location</label>
                     <input
                         type="text"
                         name="location"
@@ -76,12 +77,12 @@ const ReportFound = () => {
                         placeholder="Enter the location"
                         onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                        className="w-full p-4 border border-gray-700 bg-gray-900 rounded-md text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="contact" className="block text-lg font-medium mb-2">Contact Info</label>
+                    <label htmlFor="contact" className="block text-lg font-medium text-gray-200 mb-2">Contact Info</label>
                     <input
                         type="text"
                         name="contact"
@@ -89,12 +90,12 @@ const ReportFound = () => {
                         placeholder="Enter your contact info"
                         onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
+                        className="w-full p-4 border border-gray-700 bg-gray-900 rounded-md text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="images" className="block text-lg font-medium mb-2">Upload Images</label>
+                    <label htmlFor="images" className="block text-lg font-medium text-gray-200 mb-2">Upload Images</label>
                     <input
                         type="file"
                         name="images"
@@ -108,7 +109,7 @@ const ReportFound = () => {
 
                 <button
                     type="submit"
-                    className="w-full p-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700"
+                    className="w-full p-4 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
                 >
                     Report Found Item
                 </button>
