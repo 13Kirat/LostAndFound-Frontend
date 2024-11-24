@@ -17,7 +17,7 @@ const App = () => {
   const { isLoggedIn } = useAuth(); // Get login status from AuthContext
 
   return (
-    <div className="bg-gray-800">
+    <div className="bg-gray-900">
 
       <Router>
         <Navbar />
