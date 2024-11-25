@@ -80,14 +80,14 @@ const FoundItems = () => {
                                             key={index}
                                             src={image}
                                             alt={`Found Item ${index + 1}`}
-                                            className="w-full h-32 object-cover rounded shadow"
+                                            className="w-full h-56 object-contain rounded shadow"
                                         />
                                     ))}
                                 </div>
                             ) : (
                                 <p className="text-gray-400 text-sm">No images available.</p>
                             )}
-                            <p className="text-gray-300 mt-2">{item.description}</p>
+                            <p className="text-gray-300 mt-2">Description: {item.description}</p>
                             <p className="text-sm text-gray-400 mt-1">
                                 Location: {item.location}
                             </p>

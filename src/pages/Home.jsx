@@ -59,22 +59,45 @@ const Home = () => {
             {/* Lost Items Section */}
             <div className="mb-12">
                 <h2 className="text-2xl font-semibold text-white mb-4">Lost Items</h2>
-                {lostItems.length > 0 ? (
-                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-                        {lostItems.map((item) => (
-                            <div
-                                key={item._id}
-                                className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                            >
-                                <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-                                <p className="text-gray-300">{item.description}</p>
-                                <p className="text-sm text-gray-400 mt-1">Location: {item.location}</p>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p className="text-gray-400 italic">No lost items available to claim at the moment.</p>
-                )}
+                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+
+                    {lostItems.length > 0 ? lostItems.map((item) => (
+                        <div
+                            key={item._id}
+                            className={`p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-gray-800`}
+                        >
+                            <h3 className="text-xl font-semibold text-white mb-2">
+                                {item.title}
+                            </h3>
+
+                            {/* Images section */}
+                            {item.images?.length > 0 ? (
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    {item.images.map((image, index) => (
+                                        <img
+                                            key={index}
+                                            src={image}
+                                            alt={`Lost Item ${index + 1}`}
+                                            className="w-full h-56 object-contain rounded shadow"
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-gray-400 text-sm">No images available.</p>
+                            )}
+
+                            <p className="text-gray-300 mt-2">Description: {item.description}</p>
+                            <p className="text-sm text-gray-400 mt-1">
+                                Location: {item.location}
+                            </p>
+                            <p className="text-sm text-gray-400 mt-1">
+                                Contact: {item.contact}
+                            </p>
+                        </div>
+                    )) : (
+                        <p className="text-gray-400 italic">No lost items available to claim at the moment.</p>
+                    )}
+                </div>
             </div>
 
             {/* Found Items Section */}
@@ -85,11 +108,35 @@ const Home = () => {
                         {foundItems.map((item) => (
                             <div
                                 key={item._id}
-                                className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                                className={`p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-gray-800`}
                             >
-                                <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-                                <p className="text-gray-300">{item.description}</p>
-                                <p className="text-sm text-gray-400 mt-1">Location: {item.location}</p>
+                                <h3 className="text-xl font-semibold text-white mb-2">
+                                    {item.title}
+                                </h3>
+
+                                {/* Images section */}
+                                {item.images?.length > 0 ? (
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {item.images.map((image, index) => (
+                                            <img
+                                                key={index}
+                                                src={image}
+                                                alt={`Lost Item ${index + 1}`}
+                                                className="w-full h-56 object-contain rounded shadow"
+                                            />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-gray-400 text-sm">No images available.</p>
+                                )}
+
+                                <p className="text-gray-300 mt-2">Description: {item.description}</p>
+                                <p className="text-sm text-gray-400 mt-1">
+                                    Location: {item.location}
+                                </p>
+                                <p className="text-sm text-gray-400 mt-1">
+                                    Contact: {item.contact}
+                                </p>
                             </div>
                         ))}
                     </div>

@@ -82,7 +82,7 @@ const LostItems = () => {
                                             key={index}
                                             src={image}
                                             alt={`Lost Item ${index + 1}`}
-                                            className="w-full h-32 object-cover rounded shadow"
+                                            className="w-full h-56 object-contain rounded shadow"
                                         />
                                     ))}
                                 </div>
@@ -90,15 +90,18 @@ const LostItems = () => {
                                 <p className="text-gray-400 text-sm">No images available.</p>
                             )}
 
-                            <p className="text-gray-300 mt-2">{item.description}</p>
+                            <p className="text-gray-300 mt-2">Description: {item.description}</p>
                             <p className="text-sm text-gray-400 mt-1">
                                 Location: {item.location}
                             </p>
+                            <p className="text-sm text-gray-400 mt-1">
+                                Contact: {item.contact}
+                            </p>
 
                             {/* Claim Status */}
-                            {item.isClaimed && (
-                                <p className="text-sm text-green-500 mt-1">Claimed</p>
-                            )}
+                            <p className="text-sm text-gray-400 mt-1">
+                                Status: {item.isClaimed ? "Claimed" : "Unclaimed"}
+                            </p>
 
                             {/* Action buttons */}
                             {user && user.id === item.postedBy && (
