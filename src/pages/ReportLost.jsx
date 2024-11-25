@@ -25,7 +25,7 @@ const ReportLost = () => {
         try {
             const token = localStorage.getItem('token');
             console.log(formDataWithImages)
-            const { data } = await axios.post('http://localhost:5176/items/lost', formDataWithImages, {
+            const { data } = await axios.post('https://lostandfound-backend-2xpm.onrender.com/items/lost', formDataWithImages, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`,

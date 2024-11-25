@@ -17,12 +17,12 @@ const Signup = () => {
         e.preventDefault();
         try {
             // Signup API call
-            const { data } = await axios.post('http://localhost:5176/auth/signup', formData);
+            const { data } = await axios.post('https://lostandfound-backend-2xpm.onrender.com/auth/signup', formData);
             toast.success('Signup successful!');
 
             // Auto-login after signup
             login(data.user, data.token); // Login with received user and token data
-            
+
             console.log(data);
             navigate("/"); // Redirect to home after successful signup
         } catch (err) {

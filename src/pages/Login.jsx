@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
         setError(null); // Clear any previous error
         try {
-            const response = await axios.post("http://localhost:5176/auth/login", { email, password });
+            const response = await axios.post("https://lostandfound-backend-2xpm.onrender.com/auth/login", { email, password });
             login(response.data.user, response.data.token); // Update global state
             window.location.href = "/";
         } catch (error) {

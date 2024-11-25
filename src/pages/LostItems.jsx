@@ -9,7 +9,7 @@ const LostItems = () => {
     useEffect(() => {
         const fetchLostItems = async () => {
             try {
-                const response = await axios.get("http://localhost:5176/items/lost", {
+                const response = await axios.get("https://lostandfound-backend-2xpm.onrender.com/items/lost", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setLostItems(response.data);
@@ -23,7 +23,7 @@ const LostItems = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5176/items/lost/${id}`, {
+            await axios.delete(`https://lostandfound-backend-2xpm.onrender.com/items/lost/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setLostItems(lostItems.filter((item) => item._id !== id));
@@ -37,7 +37,7 @@ const LostItems = () => {
     const handleClaim = async (id) => {
         try {
             const response = await axios.put(
-                `http://localhost:5176/items/lost/claim/${id}`,
+                `https://lostandfound-backend-2xpm.onrender.com/items/lost/claim/${id}`,
                 {},
                 {
                     headers: {
@@ -65,11 +65,10 @@ const LostItems = () => {
                     lostItems.map((item) => (
                         <div
                             key={item._id}
-                            className={`p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow ${
-                                item.isClaimed
+                            className={`p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow ${item.isClaimed
                                     ? "bg-green-800 border-4 border-green-500"
                                     : "bg-gray-800"
-                            }`}
+                                }`}
                         >
                             <h3 className="text-xl font-semibold text-white mb-2">
                                 {item.title}

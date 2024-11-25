@@ -12,7 +12,7 @@ const Home = () => {
     useEffect(() => {
         const fetchLostItems = async () => {
             try {
-                const response = await axios.get("http://localhost:5176/items/lost", {
+                const response = await axios.get("https://lostandfound-backend-2xpm.onrender.com/items/lost", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const unclaimedItems = response.data.filter((item) => !item.isClaimed);
@@ -24,7 +24,7 @@ const Home = () => {
 
         const fetchFoundItems = async () => {
             try {
-                const response = await axios.get("http://localhost:5176/items/found", {
+                const response = await axios.get("https://lostandfound-backend-2xpm.onrender.com/items/found", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const unclaimedItems = response.data.filter((item) => !item.isClaimed);
