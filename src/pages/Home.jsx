@@ -34,10 +34,10 @@ const Home = () => {
             }
         };
 
-        if (isLoggedIn) {
-            fetchLostItems();
-            fetchFoundItems();
-        }
+
+        fetchLostItems();
+        fetchFoundItems();
+
     }, [isLoggedIn, token]);
 
     const handleViewAll = (path) => {
