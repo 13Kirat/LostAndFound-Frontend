@@ -23,9 +23,10 @@ const Signup = () => {
             // Auto-login after signup
             login(data.user, data.token); // Login with received user and token data
 
-            console.log(data);
+            // console.log(data);
             navigate("/"); // Redirect to home after successful signup
         } catch (err) {
+            // toast.error("Use Thapar Email Only");
             toast.error(`Error: ${err.response?.data?.message || "Something went wrong!"}`);
         }
     };

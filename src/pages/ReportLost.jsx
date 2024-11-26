@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from "../context/AuthContext";
+import { toast } from 'react-toastify';
 
 const ReportLost = () => {
     const [formData, setFormData] = useState({ title: '', description: '', location: '', contact: '' });
@@ -31,12 +32,12 @@ const ReportLost = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(formDataWithImages)
-            alert('Lost item reported successfully!');
-            console.log(data);
+            // console.log(formDataWithImages)
+            toast.success('Lost item reported successfully!');
+            // console.log(data);
         } catch (error) {
-            console.error(error);
-            alert('Failed to report lost item.');
+            // console.error(error);
+            toast.error('Failed to report lost item.');
         }
     };
 

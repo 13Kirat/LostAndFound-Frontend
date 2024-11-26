@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const { login } = useAuth();
@@ -13,11 +15,12 @@ const Login = () => {
         setError(null); // Clear any previous error
         try {
             const response = await axios.post("https://lostandfound-backend-2xpm.onrender.com/auth/login", { email, password });
+            toast.success("Loged In Successfully");
             login(response.data.user, response.data.token); // Update global state
             window.location.href = "/";
         } catch (error) {
-            console.error(error);
-            setError("Login failed. Please check your credentials.");
+            // console.error(error);
+            toast.error("Login failed. Please check your credentials.");
         }
     };
 
@@ -60,7 +63,7 @@ const Login = () => {
                 </form>
                 <p className="text-center text-gray-400 mt-4">
                     Don't have an account?{" "}
-                    <a href="/signup" className="text-blue-400 hover:underline">Sign Up</a>
+                    <Link to="/signup" className="text-blue-400 hover:underline">Sign Up</Link>
                 </p>
             </div>
         </div>

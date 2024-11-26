@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const FoundItems = () => {
     const { token, user } = useAuth();
@@ -27,10 +28,10 @@ const FoundItems = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setFoundItems(foundItems.filter((item) => item._id !== id));
-            alert("Found item deleted successfully!");
+            toast.success("Found item deleted successfully!");
         } catch (error) {
             console.error(error);
-            alert("Failed to delete the item.");
+            toast.error("Failed to delete the item.");
         }
     };
 
@@ -50,10 +51,10 @@ const FoundItems = () => {
                     item._id === id ? { ...item, isClaimed: true } : item
                 )
             );
-            alert("Item claimed successfully!");
+            toast.success("Item claimed successfully!");
         } catch (error) {
             console.error(error);
-            alert("Failed to claim the item.");
+            toast.error("Failed to claim the item.");
         }
     };
 

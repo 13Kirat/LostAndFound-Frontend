@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Home = () => {
     const { token, isLoggedIn } = useAuth();
@@ -18,7 +19,7 @@ const Home = () => {
                 const unclaimedItems = response.data.filter((item) => !item.isClaimed);
                 setLostItems(unclaimedItems.slice(0, 3)); // Preview only 3 unclaimed items
             } catch (error) {
-                console.error("Error fetching lost items:", error);
+                toast.error("Error fetching lost items:", error);
             }
         };
 
@@ -30,7 +31,7 @@ const Home = () => {
                 const unclaimedItems = response.data.filter((item) => !item.isClaimed);
                 setFoundItems(unclaimedItems.slice(0, 3)); // Preview only 3 unclaimed items
             } catch (error) {
-                console.error("Error fetching found items:", error);
+                toast.error("Error fetching found items:", error);
             }
         };
 
